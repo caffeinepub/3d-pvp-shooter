@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 5%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 195 70% 60%;
+    --primary-foreground: 222 47% 9%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 195 70% 60%;
+    --radius: 0rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Share Tech Mono", monospace;
+    overflow: hidden;
+  }
+  .font-display {
+    font-family: "Rajdhani", sans-serif;
+  }
+}
+
+/* Tactical grid background */
+.grid-bg {
+  background-image: linear-gradient(
+      oklch(0.78 0.17 195 / 0.05) 1px,
+      transparent 1px
+    ), linear-gradient(90deg, oklch(0.78 0.17 195 / 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* CRT scanlines */
+.scanline-bg {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    oklch(0 0 0 / 0.08) 2px,
+    oklch(0 0 0 / 0.08) 4px
+  );
+  pointer-events: none;
+}
+
+/* Glow effects */
+.text-glow-cyan {
+  text-shadow: 0 0 20px oklch(0.78 0.17 195 / 0.6), 0 0 40px
+    oklch(0.78 0.17 195 / 0.3);
+}
+.text-glow-amber {
+  text-shadow: 0 0 20px oklch(0.8 0.18 58 / 0.6), 0 0 40px
+    oklch(0.8 0.18 58 / 0.3);
+}
+
+/* Scanline sweep animation */
+@keyframes scanline {
+  0% {
+    top: -2px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+.animate-scanline {
+  animation: scanline 4s linear infinite;
+}
+
+/* Loading bar animation */
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export type MapType = "space" | "forest";
 export type WeaponType = "pistol" | "shotgun" | "rifle";
-export type GamePhase = "menu" | "playing" | "gameover";
+export type GamePhase = "menu" | "loading" | "playing" | "gameover";
 
 export interface WeaponConfig {
   name: string;
@@ -71,6 +71,7 @@ interface GameStore {
   setMapType: (map: MapType) => void;
   setPlayerName: (name: string) => void;
   startGame: () => void;
+  beginPlaying: () => void;
   returnToMenu: () => void;
   takeDamage: (amount: number) => void;
   setCurrentWeapon: (weapon: WeaponType) => void;
@@ -108,7 +109,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       spawnZ: p.z,
     }));
     set({
-      gamePhase: "playing",
+      gamePhase: "loading",
       playerHealth: 100,
       currentWeapon: "pistol",
       ammo: WEAPONS.pistol.maxAmmo,
@@ -117,6 +118,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
       enemies,
       waveClearing: false,
     });
+  },
+
+  beginPlaying: () => {
+    if (get().gamePhase === "loading") {
+      set({ gamePhase: "playing" });
+    }
   },
 
   returnToMenu: () => set({ gamePhase: "menu" }),

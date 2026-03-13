@@ -57,6 +57,7 @@ function PointerLockPrompt() {
 function GameCanvasInner() {
   const containerRef = useRef<HTMLDivElement>(null);
   const gamePhase = useGameStore((s) => s.gamePhase);
+  const beginPlaying = useGameStore((s) => s.beginPlaying);
   const { isMobile } = useGameContext();
 
   // Request pointer lock on click (desktop only)
@@ -96,6 +97,10 @@ function GameCanvasInner() {
         cursor: isMobile ? "default" : "crosshair",
         touchAction: "none",
         overflow: "hidden",
+        // Hide canvas behind loading screen
+        visibility: gamePhase === "loading" ? "hidden" : "visible",
+        position: "absolute",
+        inset: 0,
       }}
       data-ocid="game.canvas_target"
     >
@@ -104,6 +109,10 @@ function GameCanvasInner() {
         shadows
         style={{ width: "100%", height: "100%" }}
         gl={{ antialias: true }}
+        onCreated={() => {
+          // Give the scene a moment to finish setting up, then begin playing
+          setTimeout(() => beginPlaying(), 1200);
+        }}
       >
         <Scene />
       </Canvas>
